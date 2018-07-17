@@ -1,0 +1,64 @@
+# 
+# Paste this YAML there:
+# 
+#   http://codebeautify.org/yaml-to-json-xml-csv#
+#
+# and click "YAML to JSON" to see the output of those strings.
+#
+- description: >-
+    Normal string on the same line. Without quotes in the content, there is no
+    need to quote it.
+  example: This is a string that needs no quotes nor escaped character.
+
+- description: >-
+    Normal string on the same line. With un-escaped quotes within the content,
+    there is no need to quote the entire value.
+  example: This is a string with "unescaped double-quotes" that do not need to be entiredly quoted nor escaped.
+
+- description: >-
+    Normal string on the same line, but with escaped characters (double quotes),
+    forcing it to be quoted.
+  example: "This is a string that needs some \"escaping\" since it contains double quotes."
+
+- description: >-
+    Normal string on the same line, but with escaped characters (line feeds),
+    forcing it to be quoted.
+  example: "This is a string that needs some escaping since it\ncontains line feeds."
+
+- description: >-
+    Multi-line string where all line feeds are replaced by escaped-n, containing
+    a final line feed.
+  example: |
+    This is on
+    multiple lines
+    and contains
+    a final line feed.
+
+- description: >-
+    Multi-line string where all line feeds are replaced by escaped-n, not ending
+    with a final line feed.
+  example: |-
+    This is on
+    multiple lines
+    and does not contain
+    a final line feed.
+
+- description: >-
+    Continuous string, expressed on a multiple lines. Every line feed is
+    replaced by a space and it contains a final line feed.
+  example: >
+    This is expressed on
+    multiple lines but yields
+    a continuous string.
+    It contains
+    a final line feed.
+
+- description: >-
+    Continuous string, expressed on a multiple lines. Every line feed is
+    replaced by a space and it does not end with a final line feed.
+  example: >-
+    This is expressed on
+    multiple lines but yields
+    a continuous string.
+    It does not contain
+    a final line feed.
