@@ -3,7 +3,7 @@
 
 type UUID = string // for the example
 
-export interface PersonProps {
+export interface PersonPatch {
     firstName?: string
     lastName?: string
     birthdate?: Date
@@ -17,7 +17,7 @@ export interface PersonReq {
     description?: string        // optional
 }
 
-export interface PersonIn {
+export interface PersonCreate {
     // optional slug
     slug?: string
     // everything from `PersonReq`, with some required.
@@ -27,7 +27,7 @@ export interface PersonIn {
     description?: string
 }
 
-export interface PersonOut {
+export interface Person {
     // required ID
     id: UUID
     // required slug

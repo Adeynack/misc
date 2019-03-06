@@ -1,14 +1,65 @@
-# Expected generated code:
-# https://gist.github.com/Adeynack/da15116e72f61f697f911bf3e8fbd61b
-#
 openapi: 3.0.2
 info:
   title: Person API
   version: 1.0.0
-paths: {}
+paths:
+
+  '/persons':
+    get:
+      responses:
+        200:
+          description: List of person.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonList'
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonCreate'
+      responses:
+        201:
+          description: Person created.
+        422:
+          description: Validation error.
+          
+  '/persons/{person-slug}':
+    parameters:
+      - name: person-slug
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        200:
+          description: Get a specific person.
+        404:
+          description: Person not found.
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonPatch'
+      responses:
+        200:
+          description: Modifications saved, image returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        404:
+          description: Person not found.
+        422:
+          description: Validation error.
+
 components:
+
   schemas:
-  
+
     WithID:
       description: |-
         A resource with a UUID as its unique identifier.
@@ -43,7 +94,7 @@ components:
         slug:
           type: string
   
-    PersonProps:
+    PersonPatch:
       description: |-
         All properties of a person, all optional.
         Without the ID.
@@ -64,13 +115,13 @@ components:
         Pulls all properties from `PersonProps`, defining
         some as required.
       allOf:
-        - $ref: '#/components/schemas/PersonProps'
+        - $ref: '#/components/schemas/PersonPatch'
       required:
         - firstName
         - lastName
         - birthdate
       
-    PersonIn:
+    PersonCreate:
       description: |-
         The `write` version of the resource.
         Providing the `slug` is optional. If not
@@ -80,7 +131,7 @@ components:
         - $ref: '#/components/schemas/WithSlugOpt'
         - $ref: '#/components/schemas/PersonReq'
       
-    PersonOut:
+    Person:
       description: |-
         The `read` version of the resource.
         The `id` and the `slug` are mandatory in the
@@ -90,3 +141,12 @@ components:
         - $ref: '#/components/schemas/WithID'
         - $ref: '#/components/schemas/WithSlug'
         - $ref: '#/components/schemas/PersonReq'
+
+    PersonList:
+      description: |-
+        An object containing a list of person.
+      properties:
+        data:
+          type: array              
+          items:
+            $ref: '#/components/schemas/Person'
