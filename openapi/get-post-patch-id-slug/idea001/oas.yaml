@@ -1,0 +1,92 @@
+# Expected generated code:
+# https://gist.github.com/Adeynack/da15116e72f61f697f911bf3e8fbd61b
+#
+openapi: 3.0.2
+info:
+  title: Person API
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+  
+    WithID:
+      description: |-
+        A resource with a UUID as its unique identifier.
+      type: object
+      properties:
+        id:
+          type: string
+          format: UUID
+      required:
+        - id
+    
+    WithSlug:
+      description: |-
+        A resource identifiable by a human-readable
+        textual `slug`.
+        When getting a resource, the slug is required (provided
+        by the server).
+      properties:
+        slug:
+          type: string
+      required:
+        - slug
+        
+    WithSlugOpt:
+      description: |-
+        A resource with an optional slug.
+        When creating up updating a resource, it's possible
+        to provide a slug that the caller would have decide
+        in advance. Needs to be unique on the server for the
+        creation/update to succeed.
+      properties:
+        slug:
+          type: string
+  
+    PersonProps:
+      description: |-
+        All properties of a person, all optional.
+        Without the ID.
+        Used for `PATCH`.
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        description:
+          type: string
+    
+    PersonReq:
+      description: |-
+        Pulls all properties from `PersonProps`, defining
+        some as required.
+      allOf:
+        - $ref: '#/components/schemas/PersonProps'
+      required:
+        - firstName
+        - lastName
+        - birthdate
+      
+    PersonIn:
+      description: |-
+        The `write` version of the resource.
+        Providing the `slug` is optional. If not
+        provided, the server creates one automatically.
+        Used for `POST`.
+      allOf:
+        - $ref: '#/components/schemas/WithSlugOpt'
+        - $ref: '#/components/schemas/PersonReq'
+      
+    PersonOut:
+      description: |-
+        The `read` version of the resource.
+        The `id` and the `slug` are mandatory in the
+        response from the server.
+        Used for `GET`.
+      allOf:
+        - $ref: '#/components/schemas/WithID'
+        - $ref: '#/components/schemas/WithSlug'
+        - $ref: '#/components/schemas/PersonReq'
