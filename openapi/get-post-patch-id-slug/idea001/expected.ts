@@ -1,10 +1,14 @@
 type UUID = string // for the example
 
+type Translated = Map<String, String>
+
 export interface PersonPatch {
+    // everything is optional
     firstName?: string
     lastName?: string
     birthdate?: Date
     description?: string
+    originalName?: Translated
 }
 
 export interface PersonReq {
@@ -12,6 +16,7 @@ export interface PersonReq {
     lastName: string            // required 
     birthdate: Date             // required
     description?: string        // optional
+    originalName?: Translated   // optional
 }
 
 export interface PersonCreate {
@@ -22,6 +27,7 @@ export interface PersonCreate {
     lastName: string
     birthdate: Date
     description?: string
+    originalName?: Translated
 }
 
 export interface Person {
@@ -34,11 +40,23 @@ export interface Person {
     lastName: string
     birthdate: Date
     description?: string
+    originalName?: Translated
+}
+
+export interface PersonList {
+    data: Array<Person>
+}
+
+export interface PersonListItem {
+    id: UUID
+    slug: string
+    firstName: String
+    lastName: String
 }
 
 class PersonAPI {
 
-    getPersonList(): Array<Person> {
+    getPersonList(): Array<PersonListItem> {
         // GET request to `/persons`
         return [];
     }

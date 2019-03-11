@@ -36,6 +36,10 @@ paths:
       responses:
         200:
           description: Get a specific person.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
         404:
           description: Person not found.
     patch:
@@ -59,6 +63,18 @@ paths:
 components:
 
   schemas:
+
+    Translated:
+      description: |-
+        A translated text under the form of a JSON object
+        where the keys are the language code and their value
+        is a the translated string.
+      additionalProperties:
+        type: string
+      example:
+        en: Hello!
+        fr: Bonjour!
+        de: Guten Tag!
 
     WithID:
       description: |-
@@ -100,15 +116,19 @@ components:
         Without the ID.
         Used for `PATCH`.
       properties:
-        firstName:
+        first_name:
           type: string
-        lastName:
+        last_name:
           type: string
         birthdate:
           type: string
           format: date
         description:
           type: string
+        original_name:
+          description: Name of the person in its original language(s).
+          allOf:
+            - $ref: '#/components/schemas/Translated'
     
     PersonReq:
       description: |-
@@ -120,7 +140,7 @@ components:
         - firstName
         - lastName
         - birthdate
-      
+
     PersonCreate:
       description: |-
         The `write` version of the resource.
@@ -149,4 +169,16 @@ components:
         data:
           type: array              
           items:
-            $ref: '#/components/schemas/Person'
+            $ref: '#/components/schemas/PersonListItem'
+    
+    PersonListItem:
+      description: |-
+        A person as described as part of a list.
+      allOf:
+        - $ref: '#/components/schemas/WithID'
+        - $ref: '#/components/schemas/WithSlug'
+        - properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
