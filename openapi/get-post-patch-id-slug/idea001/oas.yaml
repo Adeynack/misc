@@ -64,6 +64,13 @@ components:
 
   schemas:
 
+    UUID:
+      description: A unique identifier in the UUID format.
+      readOnly: true
+      type: string
+      format: UUID
+      example: '76a9f945-ca75-4354-9904-cc4625af1947'
+
     Translated:
       description: |-
         A translated text under the form of a JSON object
@@ -82,8 +89,7 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: UUID
+          $ref: '#/components/schemas/UUID'
       required:
         - id
     
@@ -96,9 +102,10 @@ components:
       properties:
         slug:
           type: string
+          example: papa-giorgio
       required:
         - slug
-        
+
     WithSlugOpt:
       description: |-
         A resource with an optional slug.
@@ -118,18 +125,28 @@ components:
       properties:
         first_name:
           type: string
+          example: Georg
         last_name:
           type: string
+          example: Steiner
         birthdate:
           type: string
           format: date
+          example: '1975-07-23'
         description:
           type: string
+          example: Ein netter Typ!
         original_name:
           description: Name of the person in its original language(s).
           allOf:
             - $ref: '#/components/schemas/Translated'
-    
+          example:
+            en: George
+            fr: Georges
+            de: Jörg
+            cz: Jiří
+            ru: Юрий
+
     PersonReq:
       description: |-
         Pulls all properties from `PersonProps`, defining
@@ -180,5 +197,7 @@ components:
         - properties:
             first_name:
               type: string
+              example: Georg
             last_name:
               type: string
+              example: Steiner
