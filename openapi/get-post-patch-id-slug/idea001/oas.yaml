@@ -12,13 +12,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PersonList'
+                $ref: '#/components/schemas/Person_Index'
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PersonCreate'
+              $ref: '#/components/schemas/Person_Create'
       responses:
         201:
           description: Person created.
@@ -39,7 +39,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Person'
+                $ref: '#/components/schemas/Person_Show'
         404:
           description: Person not found.
     patch:
@@ -47,14 +47,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PersonPatch'
+              $ref: '#/components/schemas/Person_Props'
       responses:
         200:
           description: Modifications saved, image returned.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Person'
+                $ref: '#/components/schemas/Person_Show'
         404:
           description: Person not found.
         422:
@@ -117,7 +117,7 @@ components:
         slug:
           type: string
   
-    PersonPatch:
+    Person_Props:
       description: |-
         All properties of a person, all optional.
         Without the ID.
@@ -147,18 +147,18 @@ components:
             cz: Jiří
             ru: Юрий
 
-    PersonReq:
+    Person_Base:
       description: |-
-        Pulls all properties from `PersonProps`, defining
+        Pulls all properties from `PersonPatch`, defining
         some as required.
       allOf:
-        - $ref: '#/components/schemas/PersonPatch'
+        - $ref: '#/components/schemas/Person_Props'
       required:
         - firstName
         - lastName
         - birthdate
 
-    PersonCreate:
+    Person_Create:
       description: |-
         The `write` version of the resource.
         Providing the `slug` is optional. If not
@@ -166,9 +166,9 @@ components:
         Used for `POST`.
       allOf:
         - $ref: '#/components/schemas/WithSlugOpt'
-        - $ref: '#/components/schemas/PersonReq'
+        - $ref: '#/components/schemas/Person_Base'
       
-    Person:
+    Person_Show:
       description: |-
         The `read` version of the resource.
         The `id` and the `slug` are mandatory in the
@@ -177,18 +177,18 @@ components:
       allOf:
         - $ref: '#/components/schemas/WithID'
         - $ref: '#/components/schemas/WithSlug'
-        - $ref: '#/components/schemas/PersonReq'
+        - $ref: '#/components/schemas/Person_Base'
 
-    PersonList:
+    Person_Index:
       description: |-
         An object containing a list of person.
       properties:
         data:
           type: array              
           items:
-            $ref: '#/components/schemas/PersonListItem'
+            $ref: '#/components/schemas/Person_Partial'
     
-    PersonListItem:
+    Person_Partial:
       description: |-
         A person as described as part of a list.
       allOf:
@@ -201,3 +201,6 @@ components:
             last_name:
               type: string
               example: Steiner
+          required:
+            - first_name
+            - last_name
