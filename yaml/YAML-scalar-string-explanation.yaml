@@ -1,9 +1,6 @@
 # 
-# Paste this YAML there:
-# 
-#   http://codebeautify.org/yaml-to-json-xml-csv#
-#
-# and click "YAML to JSON" to see the output of those strings.
+# Use this tool to experiment with the different wrapping technique YAML has to offer:
+# https://onlineyamltools.com/convert-yaml-to-json
 #
 - description: >-
     Normal string on the same line. Without quotes in the content, there is no
@@ -33,6 +30,7 @@
     multiple lines
     and contains
     a final line feed.
+  result: "This is expressed on\nmultiple lines\nand does not contains a final line feed.\n"
 
 - description: >-
     Multi-line string where all line feeds are replaced by escaped-n, not ending
@@ -42,6 +40,7 @@
     multiple lines
     and does not contain
     a final line feed.
+  result: "This is expressed on\nmultiple lines\nand does not contains a final line feed."
 
 - description: >-
     Continuous string, expressed on a multiple lines. Every line feed is
@@ -52,7 +51,8 @@
     a continuous string.
     It contains
     a final line feed.
-
+  result: "This is expressed on multiple lines but yields a continuous string. It contains a final line feed.\n"
+  
 - description: >-
     Continuous string, expressed on a multiple lines. Every line feed is
     replaced by a space and it does not end with a final line feed.
@@ -62,3 +62,13 @@
     a continuous string.
     It does not contain
     a final line feed.
+  result: "This is expressed on multiple lines but yields a continuous string. It does not contain a final line feed."
+
+- description: >-
+    Continuous string, double-quoted, expressed on multiple lines with escaped
+    line feeds. Every line feed is removed (no space inserted) and it does not
+    end with a final line feed.
+  example: "This is expres\
+    sed on multiple lines \
+    but yields a continuous string. It does not contain a final line feed"
+  result: "This is expressed on multiple lines but yields a continuous string. It does not contain a final line feed."
